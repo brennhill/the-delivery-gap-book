@@ -1,0 +1,38 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "code-reviewers"
+version = "0.1.0"
+description = "Multi-pass AI code review — three specialized perspectives for higher defect detection"
+readme = "README.md"
+license = "Apache-2.0"
+requires-python = ">=3.10"
+authors = [
+    { name = "Brenn Hill" },
+]
+keywords = ["code-review", "ai", "delivery-gap", "verification"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: Apache Software License",
+    "Programming Language :: Python :: 3",
+    "Topic :: Software Development :: Quality Assurance",
+]
+
+# No hard dependencies — provider SDKs are optional
+dependencies = []
+
+[project.optional-dependencies]
+anthropic = ["anthropic>=0.30"]
+openai = ["openai>=1.0"]
+litellm = ["litellm>=1.0"]
+all = ["anthropic>=0.30", "openai>=1.0", "litellm>=1.0"]
+
+[project.scripts]
+code-reviewers = "delivery_gap_review.cli:main"
+
+[project.urls]
+Homepage = "https://github.com/brennhill/the-delivery-gap-book"
+Book = "https://leanpub.com/the-delivery-gap"
