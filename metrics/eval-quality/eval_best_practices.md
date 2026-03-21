@@ -45,6 +45,19 @@ DORA benchmarks:
 - Medium: 10-15%
 - Low: > 15%
 
+## Step 0: Error analysis before gate building
+
+Before adding gates, look at what actually fails. Most teams skip this and build gates based on what they *think* will go wrong. The result: gates that catch theoretical problems while real failures slip through.
+
+1. **Collect 50-100 real outputs** — random sample from the last 1-2 weeks, not cherry-picked
+2. **Categorize failures manually** — let categories emerge from the data, don't use predefined lists
+3. **Prioritize by frequency × severity** — your top 3-5 categories become your first gates
+4. **Build one eval per failure mode** — targeted pass/fail checks, not generic quality scores
+
+See [tools/eval-examples/error-analysis-workflow/](../../tools/eval-examples/error-analysis-workflow/) for runnable scripts that automate the collection and summarization steps.
+
+Generic metrics (ROUGE, BERTScore, "similarity score") are the eval equivalent of measuring PR volume instead of accepted outcomes. They optimize a proxy, not the thing you care about. Domain-specific evals targeting your actual failure modes are what move the machine catch rate.
+
 ## Building gates that actually work
 
 ### Gates must block, not warn

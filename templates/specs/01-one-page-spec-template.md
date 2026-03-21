@@ -26,9 +26,13 @@
 - Error/logging conventions:
 
 ## 6) Acceptance criteria (deterministic)
+*These are your eval definitions. When a criterion here changes, the corresponding gate must update. The spec and the eval are the same artifact at different levels of formality.*
+
 1. Contract check:
 2. Invariant check:
 3. Policy check:
+
+Eval owner: *(same as DRI unless delegated — the person who updates these when requirements change)*
 
 ## 7) Rollback Plan
 - Trigger signal:
