@@ -1,56 +1,58 @@
-# The Delivery Gap — Execution Kit
+# The Delivery Gap Toolkit
 
-Companion tools, scripts, and templates for *The Delivery Gap: Speed and Certainty in the Age of AI* by Brenn Hill.
+Companion tools and guides for *The Delivery Gap: Speed and Certainty in the Age of AI* by Brenn Hill.
 
-The book describes the gap between generation velocity and verification capacity. This repo helps you close it with running code, actionable checklists, and measurement scripts you can deploy this week.
-
----
-
-## Structure
-
-```
-metrics/                              Measure all three vertices of the Verification Triangle
-├── cost-per-accepted-change/         The metric no commercial tool computes (yet)
-├── rework-detection/                 14-day rework detection from git history
-├── delivery-baseline/                Baseline metrics from git + GitHub API
-├── spec-quality/                     Spec coverage scanner + rework-by-spec comparison
-└── eval-quality/                     Machine catch rate, reviewer-minutes, defect escape, change fail rate
-
-gates/                                Implement the five quality gate tiers
-├── agent-production-checklist.md     Unified checklist from OpenAI, Anthropic, Google, NVIDIA, Spotify
-├── observability/                    Three-layer observability: pipeline, delivery, agent
-├── agent-monitoring/                 Step-by-step agent observability with code examples
-├── agent-security/                   OWASP Top 10 mapped tooling for agent constraints
-├── multi-pass-review/                Installable multi-perspective AI code review (code-reviewers)
-├── pr-size-limits/                   400-line limit with GitHub Actions + GitLab CI configs
-└── by-language/                      Gate tooling for JS/TS, Python, Go, JVM, Rust, Ruby, PHP
-
-templates/                            Process artifacts
-├── specs/                            One-page spec template
-├── review/                           Code review checklist, eval definition, failure taxonomy
-├── scorecard/                        Weekly scorecard CSV
-└── rollout/                          AI rollout memo for leadership
-
-tools/                                Worked examples
-└── invariant-examples/               Idempotent webhook with property-based tests
-```
+AI makes code generation fast. This toolkit makes verification keep up.
 
 ---
 
-## The Spec Template: Why It's Ordered This Way
+## Get Started
 
-The [Context-Anchor Spec](templates/specs/01-one-page-spec-template.md) has 12 sections split into two blocks:
+**The fastest path:** Clone this repo, open it with [Claude Code](https://claude.ai/claude-code), [Cursor](https://cursor.com), or any AI tool that reads `CLAUDE.md`. The AI will walk you through setting up verification infrastructure for your project — policy, gates, measurement — step by step.
 
-**👤 Human context (sections 1–4)** comes first: who this is for, what success looks like, who owns it, how to roll back. These set the stage for reviewers and stakeholders. They are not scored by quality tools — humans judge whether a feature succeeded in the market, not machines.
+```bash
+git clone https://github.com/brennhill/Delivery-Gap-Toolkit.git
+# Open with your AI coding tool and follow the prompts
+```
 
-**🤖 Machine execution (sections 5–12)** comes last: model anchors, entities, scope, constraints, style rules, error contracts, edge cases, acceptance criteria. These are the sections AI agents consume during code generation and that [upfront](https://github.com/brennhill/upfront) scores for quality.
+**Without AI:** Start with the [quick-start guide](quick-start/) for your language, then work through the sections below.
 
-The ordering is intentional. LLMs exhibit **recency bias** — content at the end of the context window is weighted more heavily than content at the beginning. By placing the machine-executable sections last, the acceptance criteria, error contracts, and edge cases sit in the strongest position in the AI's attention when it starts generating code.
+> **Warning:** This toolkit is a starting point, not a finish line. Tier 0 gates catch the cheapest failures. Real verification requires investment in contract gates, invariant tests, and review culture. Do not install this and assume you are safe.
 
-The sections themselves were derived from a gap analysis across three spec formats:
-- **[Spec Kit](https://github.com/github/spec-kit)** (GitHub) — contributed Edge Cases, Key Entities, Success Criteria
-- **[Kiro](https://kiro.dev)** (AWS) — contributed Glossary/Entity definitions, Error Handling strategy
-- **Delivery Gap** (original) — contributed Model Anchors, Scope Non-goals, Contract/Invariant/Policy checks, Rollback Plan
+---
+
+## What's Inside
+
+### [AI Policy](ai-policy/)
+A defensible AI policy template you can present to leadership — pre-filled with reasoning, not blank fields. Includes a regulatory checklist (HIPAA, SOC2, FedRAMP, GDPR, PCI DSS).
+
+### [Quick Start Guides](quick-start/)
+Opinionated Tier 0 setup guides for TypeScript, Python, Go, and JVM. Each tells you exactly what to install and why. One tool per job, no decision fatigue.
+
+### [Quality & Correctness Gates](quality-correctness-gates/)
+Gate tooling recommendations by language (Tiers 0-3), an agent production readiness checklist, and an installable multi-pass AI code review tool.
+
+### [Measurement Guidance](measurement-guidance/)
+What to measure, which established tools to use (DORA ecosystem), how to see what your CI caught, and how to run a 15-minute weekly review. No custom scripts — we point you to tools that have solved measurement properly.
+
+### [Specs & Process](specs-and-process/)
+The four-phase feature definition process: Intent, Behavioral Spec, Design, Implementation. Includes Claude Code slash commands (`/feature`, `/plan`, `/build`) and spec templates.
+
+### [Templates](templates/)
+Review checklists, rollout memo for leadership, first-week AI onboarding guide.
+
+### [Worked Examples](tools/)
+Invariant, contract, and eval test examples you can adapt for your domain.
+
+---
+
+## The Spec Template
+
+The [Context-Anchor Spec](templates/specs/swe/01-one-page-spec-template.md) has 12 sections split into two blocks:
+
+**Human context (sections 1-4)** comes first: who this is for, what success looks like, who owns it, how to roll back.
+
+**Machine execution (sections 5-12)** comes last: model anchors, entities, scope, constraints, style rules, error contracts, edge cases, acceptance criteria. LLMs exhibit recency bias — placing these last puts them in the strongest position when the AI starts generating code.
 
 Each machine section prevents a specific class of AI hallucination:
 
@@ -67,74 +69,9 @@ Each machine section prevents a specific class of AI hallucination:
 
 ---
 
-## Quick Start
+## Key Research
 
-### "I need to measure whether AI is helping or hurting"
-
-```bash
-# Detect rework from git history
-python metrics/rework-detection/rework-detector.py --repo owner/repo --json rework.json
-
-# Calculate cost per accepted change
-python metrics/cost-per-accepted-change/cost-calculator.py \
-  --json costs.json --from-rework rework.json --html report.html
-
-# Check spec coverage
-python metrics/spec-quality/spec-coverage.py --repo owner/repo
-
-# Check machine catch rate
-python metrics/eval-quality/machine-catch-rate.py --repo owner/repo
-```
-
-### "I have a monorepo drowning in AI PRs"
-
-```bash
-# Enforce PR size limits in CI
-# See gates/pr-size-limits/ for GitHub Actions + GitLab configs
-
-# Run multi-pass AI code review
-pip install -e "gates/multi-pass-review[anthropic]"
-code-reviewers --pr 123 --repo owner/repo --parallel
-```
-
-### "I'm deploying agents to production"
-
-Start with the checklist:
-→ **[gates/agent-production-checklist.md](gates/agent-production-checklist.md)**
-
-Then set up monitoring:
-→ **[gates/agent-monitoring/](gates/agent-monitoring/)**
-
-### "I need gate tooling for my language"
-
-→ **[gates/by-language/](gates/by-language/)** — JS/TS, Python, Go, JVM, Rust, Ruby, PHP
-
----
-
-## Key External Resources
-
-### From the model providers
-
-| Provider | Guide | Focus |
-|----------|-------|-------|
-| OpenAI | [Monitoring coding agents for misalignment](https://openai.com/index/how-we-monitor-internal-coding-agents-misalignment/) | Behavioral monitoring at scale |
-| OpenAI | [Practical guide to building agents](https://openai.com/business/guides-and-resources/a-practical-guide-to-building-ai-agents/) | Guardrails, input filtering, human-in-the-loop |
-| Anthropic | [Demystifying evals for AI agents](https://www.anthropic.com/engineering/demystifying-evals-for-ai-agents) | Production monitoring + evals |
-| Anthropic | [Building Effective AI Agents](https://resources.anthropic.com/building-effective-ai-agents) | End-to-end agent patterns |
-| Anthropic | [Claude Code best practices](https://www.anthropic.com/engineering/claude-code-best-practices) | Agentic coding patterns |
-| Google | [ADK Safety and Security](https://google.github.io/adk-docs/safety/) | Identity, permissions, sandboxing |
-
-### Standards & frameworks
-
-| Standard | What it is | URL |
-|----------|-----------|-----|
-| OWASP Top 10 for Agentic Applications | 10 risk categories, 100+ experts | [owasp.org](https://genai.owasp.org/resource/owasp-top-10-for-agentic-applications-for-2026/) |
-| DORA Metrics | Delivery performance measurement | [dora.dev](https://dora.dev/guides/dora-metrics/) |
-| NVIDIA OpenShell | Default-deny agent runtime | [github.com](https://github.com/NVIDIA/OpenShell) |
-| SPIFFE/SPIRE | Cryptographic workload identity | [spiffe.io](https://spiffe.io) |
-| OpenTelemetry GenAI | AI-specific observability conventions | [opentelemetry.io](https://opentelemetry.io/docs/specs/semconv/gen-ai/gen-ai-metrics/) |
-
-### Key research
+### The delivery gap is real
 
 | Study | Finding |
 |-------|---------|
@@ -144,7 +81,42 @@ Then set up monitoring:
 | NAV IT (20 months, 4,000 developers) | No measurable productivity change |
 | CircleCI (9M workflows) | Top 5% at +97% throughput; median at +4% |
 
-For code quality and gate-specific research, see [gates/README.md](gates/README.md#key-research).
+### Why gates matter more for AI code
+
+AI-generated code fails systematically, not randomly. The same model produces the same blind spots every time.
+
+| Study | Finding |
+|-------|---------|
+| [Wu et al., 2024](https://arxiv.org/abs/2407.02209) | LLMs converge on narrower patterns than human developers collectively produce |
+| [Dakhel et al., 2025](https://arxiv.org/abs/2508.21634) | 500K+ samples: AI and human defect profiles are complementary |
+| [Tamberg et al., 2025](https://arxiv.org/abs/2512.05239) | 10 systematic AI bug patterns including missing corner cases and hallucinated objects |
+| [CodeRabbit, 2025](https://www.coderabbit.ai/blog/state-of-ai-vs-human-code-generation-report) | AI code: 2.29x more concurrency issues, 2.25x more business logic errors |
+| [Ullah et al., 2025](https://arxiv.org/abs/2510.26103) | 4,241 CWE instances across 77 vulnerability types in AI-generated code |
+
+**Homogeneous generation demands heterogeneous verification.** The gate tiers in this toolkit compensate for the failure-mode diversity that human teams provided accidentally.
+
+---
+
+## External Resources
+
+### From model providers
+
+| Provider | Guide |
+|----------|-------|
+| OpenAI | [Monitoring coding agents for misalignment](https://openai.com/index/how-we-monitor-internal-coding-agents-misalignment/) |
+| OpenAI | [Practical guide to building agents](https://openai.com/business/guides-and-resources/a-practical-guide-to-building-ai-agents/) |
+| Anthropic | [Demystifying evals for AI agents](https://www.anthropic.com/engineering/demystifying-evals-for-ai-agents) |
+| Anthropic | [Building Effective AI Agents](https://resources.anthropic.com/building-effective-ai-agents) |
+| Anthropic | [Claude Code best practices](https://www.anthropic.com/engineering/claude-code-best-practices) |
+| Google | [ADK Safety and Security](https://google.github.io/adk-docs/safety/) |
+
+### Standards
+
+| Standard | URL |
+|----------|-----|
+| OWASP Top 10 for Agentic Applications | [owasp.org](https://genai.owasp.org/resource/owasp-top-10-for-agentic-applications-for-2026/) |
+| DORA Metrics | [dora.dev](https://dora.dev/guides/dora-metrics/) |
+| OpenTelemetry GenAI | [opentelemetry.io](https://opentelemetry.io/docs/specs/semconv/gen-ai/gen-ai-metrics/) |
 
 ---
 

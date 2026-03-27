@@ -8,13 +8,13 @@ These templates are the starting point. Customize them for your team, but don't 
 
 ## specs/
 
-**[01-one-page-spec-template.md](specs/01-one-page-spec-template.md)** — The spec that makes verification possible.
+Spec templates organized by discipline. Each discipline defines its own sections, scoring model, and completeness criteria. See [specs/README.md](specs/README.md) for design rationale.
 
-A spec names the user-facing change, non-negotiable constraints, what is out of scope, architectural boundaries, and acceptance criteria. Think of it as lane markers on a highway — without them, fast just means fast into the guardrail.
+- **[swe/01-one-page-spec-template.md](specs/swe/01-one-page-spec-template.md)** — The Context-Anchor Spec for software engineering tasks. Eight sections covering context, model anchors, scope boundaries, constraints, style rules, acceptance criteria, rollback, and ownership.
+
+- **[ml-research/01-ml-research-spec-template.md](specs/ml-research/01-ml-research-spec-template.md)** — ML Research Spec for experiments and model training. Three required sections (research direction, success metric, constraints) plus eight optional sections scored only if included.
 
 Enforcement: PRs without a linked spec for Risk Tier 2+ changes go back before review starts. Add a "Spec Link" field to your PR template, required, not optional.
-
-See also: [metrics/spec-quality/spec_best_practices.md](../metrics/spec-quality/spec_best_practices.md)
 
 ---
 
@@ -28,13 +28,9 @@ Templates for standardizing how changes are evaluated.
 
 - **[04-trace-failure-taxonomy.md](review/04-trace-failure-taxonomy.md)** — Failure classification for incident review and postmortems. Maps each failure to the five breakdown modes: output trust, gates, human layer, scope, cost.
 
-See also: [metrics/eval-quality/eval_best_practices.md](../metrics/eval-quality/eval_best_practices.md)
-
 ---
 
-## scorecard/
-
-**[05-weekly-scorecard-template.csv](scorecard/05-weekly-scorecard-template.csv)** — CSV template for the weekly review.
+## Weekly Scorecard
 
 The weekly review is 15 minutes, three people (EM, tech lead, one rotating IC), with a pre-read posted the day before. The scorecard shows four numbers, one outlier, and one control tweak.
 
@@ -42,8 +38,8 @@ The weekly review is 15 minutes, three people (EM, tech lead, one rotating IC), 
 |--------|-----------|-----------|--------------|--------|
 | Cost per accepted change | $ | $ | ↑ ↓ → | $ |
 | Rework rate | % | % | ↑ ↓ → | < % |
-| Reviewer-minutes per accepted change | min | min | ↑ ↓ → | < min |
 | Defect escape rate | % | % | ↑ ↓ → | < % |
+| Change fail rate | % | % | ↑ ↓ → | < % |
 
 The cadence matters more than the sophistication. A team that reviews four rough numbers weekly outperforms a team that reviews perfect dashboards quarterly.
 

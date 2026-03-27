@@ -1,47 +1,62 @@
-# Tools — Worked Examples & Reference Implementations
+# Tools — Repo-Wide Index
 
-Reference implementations for concepts that are easier to understand with running code than prose.
+This directory is the entry point for runnable tools, scripts, and reference implementations across the repository.
 
----
+Use it when you want the fast answer to:
 
-## invariant-examples/
-
-Tests that verify **business rules** hold under all conditions. Tier 2 gates — not checking specific inputs/outputs, but checking whether a *property* holds for *all* inputs.
-
-| Example | Invariant |
-|---------|-----------|
-| [idempotent-webhook/](invariant-examples/idempotent-webhook/) | Processing the same webhook twice produces exactly one side effect |
-| [rate-limiter/](invariant-examples/rate-limiter/) | Token bucket respects limits under concurrent access |
-| [state-machine/](invariant-examples/state-machine/) | Only valid state transitions are allowed |
-| [balance-transfer/](invariant-examples/balance-transfer/) | No double-debit, atomic transfers |
-| [unique-registration/](invariant-examples/unique-registration/) | Uniqueness constraint holds under race conditions |
-| [event-log/](invariant-examples/event-log/) | Event ordering invariants across threads |
-
-The three questions: What must never happen twice? What must always be true after this operation completes? What breaks if operations run out of order?
+- what can I run right now,
+- which part of the control layer it belongs to,
+- and where the implementation actually lives.
 
 ---
 
-## contract-examples/
+## Quality-correctness gate tools
 
-Tests that verify **interface shape** — API responses match their documented schema. Tier 1 gates — catching silent renames, type changes, and undocumented field leaks.
+These live in [`../quality-correctness-gates/`](../quality-correctness-gates/).
 
-| Example | Contract |
-|---------|----------|
-| [api-schema-contract/](contract-examples/api-schema-contract/) | Checkout response fields, types, and nullability match the spec |
+- **Agent production checklist** — [`../quality-correctness-gates/agent-production-checklist.md`](../quality-correctness-gates/agent-production-checklist.md)
+- **PR size limits** — [`../quality-correctness-gates/pr-size-limits/`](../quality-correctness-gates/pr-size-limits/)
+- **Multi-pass review** — [`../quality-correctness-gates/multi-pass-review/`](../quality-correctness-gates/multi-pass-review/)
+- **Agent monitoring** — [`../quality-correctness-gates/agent-monitoring/`](../quality-correctness-gates/agent-monitoring/)
+- **Observability** — [`../quality-correctness-gates/observability/`](../quality-correctness-gates/observability/)
+- **Agent security** — [`../quality-correctness-gates/agent-security/`](../quality-correctness-gates/agent-security/)
+- **By language defaults** — [`../quality-correctness-gates/by-language/`](../quality-correctness-gates/by-language/)
+
+These answer: what should block, what should escalate, and what should be observable before a change reaches production.
 
 ---
 
-## eval-examples/
+## Templates
 
-Tools for building **domain-specific evaluations** — start with error analysis to discover what actually fails, then build targeted evals.
+The reusable process artifacts live in [`../templates/`](../templates/).
 
-| Example | Pattern |
-|---------|---------|
-| [error-analysis-workflow/](eval-examples/error-analysis-workflow/) | Step 0: collect, review, categorize real failures before building any gate |
-| [llm-as-judge/](eval-examples/llm-as-judge/) | Grade AI outputs against a domain-specific rubric (not generic metrics) |
+- specs
+- review rubrics
+- scorecards
+- rollout memos
+- onboarding guides
+
+These are not scanners or scripts, but they are still part of the machine-checkable system because they define what the checks should enforce.
+
+---
+
+## Worked examples in this directory
+
+### invariant-examples/
+
+Reference implementations for tests that are easier to understand with running code than prose.
+
+- [balance-transfer](invariant-examples/balance-transfer/README.md)
+- [event-log](invariant-examples/event-log/README.md)
+- [idempotent-webhook](invariant-examples/idempotent-webhook/README.md)
+- [rate-limiter](invariant-examples/rate-limiter/README.md)
+- [state-machine](invariant-examples/state-machine/README.md)
+- [unique-registration](invariant-examples/unique-registration/README.md)
+
+These are examples of the kind of invariant checks the book argues should be automated wherever possible.
 
 ---
 
 ## Contributing
 
-If you have a worked example of an invariant test, contract gate, or eval that others could learn from, contributions are welcome. Each example should be self-contained with its own README explaining what it catches and how to run it.
+If you have a worked example of an invariant test, contract gate, policy check, or delivery metric that others could learn from, contributions are welcome. Each addition should be self-contained with its own README explaining what it checks, how to run it, and where it fits in the control layer.

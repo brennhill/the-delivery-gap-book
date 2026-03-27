@@ -63,9 +63,9 @@ Every change you ship has a cost. AI shifts where the cost falls, but it does no
 
 **What to do:**
 
-1. Run the [cost calculator](../../metrics/cost-per-accepted-change/cost-calculator.py) on one of your merged PRs. Look at where the time went.
+1. Calculate the cost per accepted change for one of your merged PRs. See `measurement-guidance/` for how to track this metric. Look at where the time went.
 2. Understand what "human engineering time" includes: prompting, yes, but also discussion, whiteboarding, spec writing, and the back-and-forth to get the AI output right. Track this honestly.
-3. Check the team's current [rework rate](../../metrics/rework-detection/rework-detector.py). Every change you merge contributes to this number. A change that ships fast but gets reverted within 14 days costs more than one that ships slowly and sticks.
+3. Check the team's current rework rate. See `measurement-guidance/` for how to track this metric. Every change you merge contributes to this number. A change that ships fast but gets reverted within 14 days costs more than one that ships slowly and sticks.
 
 **Why this matters:** Speed without verification creates rework. Rework is the most expensive line item in AI-assisted development because it consumes two review cycles instead of one.
 
