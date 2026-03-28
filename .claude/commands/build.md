@@ -454,11 +454,64 @@ Then tell the user:
 
 ## Resuming
 
-If the user re-runs `/build` on a plan with some phases already completed:
-- Read `specs/[feature-name]-progress.md` to understand what's done
-- Trust that completed phases are done (they're committed)
-- Pick up from the first unchecked phase
-- The progress file gives the new context everything it needs — no conversation history required
+If the user re-runs `/build` on a plan with some phases already completed, follow this crash recovery protocol before continuing.
+
+### Step 1: Detect uncommitted changes
+
+Before reading the progress file, run `git status` to check for uncommitted changes (modified, added, or untracked files within the feature's scope).
+
+If there are uncommitted changes:
+
+```
+Found uncommitted changes from a previous session (likely a crash mid-Phase [N]):
+
+  modified: src/queue/writer.go
+  modified: src/queue/writer_test.go
+  new file: src/queue/buffer.go
+
+Options:
+  a) Keep these changes and continue Phase [N] from where it left off
+  b) Stash these changes and restart Phase [N] clean (git stash with message "build: stash Phase [N] crash recovery")
+  c) Discard these changes and restart Phase [N] (WARNING: destructive — will ask for confirmation)
+```
+
+Wait for the user to choose before proceeding. If they choose (c), confirm explicitly: "This will discard all uncommitted changes. Are you sure?" Do not run `git checkout` on tracked files or remove untracked files without explicit confirmation.
+
+### Step 2: Reconcile progress file with git history
+
+After handling any uncommitted changes, reconcile the two sources of truth:
+
+1. Read `specs/[feature-name]-progress.md` to see which phases are marked complete.
+2. Check `git log --oneline` for commits matching the pattern `feat([feature-name]): [N]/` to verify each completed phase has a corresponding commit.
+
+For each phase marked complete in the progress file, verify a commit exists:
+- If the progress file says Phase N is complete AND a commit exists: confirmed complete.
+- If the progress file says Phase N is complete BUT no commit exists: flag it.
+
+```
+WARNING: Progress file says Phase 3 is complete, but I can't find the commit.
+The session may have crashed after updating progress but before committing.
+Phase 3 will need to be re-run.
+```
+
+Pick up from the first phase that does not have BOTH a progress entry AND a matching commit.
+
+### Step 3: Present the resumption summary
+
+Before starting work, present a structured handoff note:
+
+```
+Resuming build for [feature-name]:
+
+Completed: Phase 1 (committed), Phase 2 (committed)
+Unverified: Phase 3 (progress file says complete, no commit found — will re-run)
+Next: Phase 3
+
+Learnings from prior phases:
+- [key learnings from the progress file that affect upcoming work]
+```
+
+Wait for user confirmation, then proceed with the next phase. Skip the pre-flight audit on resume (it was already done before Phase 1).
 
 ## Why fresh context per phase
 
