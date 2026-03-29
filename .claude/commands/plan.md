@@ -16,18 +16,20 @@ If no path is provided, check the `specs/` directory for recent specs and ask wh
 
 ## Process
 
-### 1. Read the spec
+### 1. Read the spec and constitution
 
 Read the entire spec file. Understand:
 - The intent (what problem, what metric, what's out of scope, what must not happen)
-- The constraint surface (model anchors, scope boundaries, acceptance criteria)
+- The constraint surface (scope boundaries, acceptance criteria)
 - The blind spots flagged
+
+Also read `specs/CONSTITUTION.md` if it exists. Constitutional principles are hard constraints — every proposed phase must comply. If a phase would require violating a constitutional principle, flag it before proposing the plan.
 
 ### 2. Research the codebase
 
 Before proposing any phases, investigate the actual code. Use subagents for parallel research where possible.
 
-For each model anchor listed in the spec:
+For each file, module, or component referenced in the spec (especially in the Design Approach and Implementation Design sections):
 - Read the referenced files
 - Understand the existing patterns, conventions, and architecture
 
@@ -59,7 +61,7 @@ Before starting the deep-dive, check if `specs/ARCHITECTURE.md` exists.
 
 **If less than 30 days old OR no commits since:**
 - Note: "Architecture reviewed [date], [N] commits since — appears current."
-- Proceed normally.
+- Skip the full 3-level deep-dive below. Instead, do a quick delta check: read the areas of the codebase this feature will touch and verify they match what ARCHITECTURE.md says. If they match, proceed directly to "Persisting the architecture." If there is drift in the feature-relevant areas, update those sections and proceed.
 
 **If `specs/ARCHITECTURE.md` doesn't exist:**
 - Note that it doesn't exist and proceed — the deep-dive below will create it.
@@ -180,7 +182,7 @@ Let the user decide. If they choose option 1, add a Phase 0 to the plan that ins
 - Go: `go vet`, `staticcheck` or `golangci-lint`, `go test` passing, `gofmt`/`goimports`
 - TypeScript: `tsc --strict`, ESLint with import rules, `npm test` passing, Prettier
 - Python: `mypy` or `pyright`, `ruff` or `flake8`, `pytest` passing, `black` or `ruff format`
-- Any language: CI pipeline configured, pre-commit hooks, build scripts
+- Any language: CI pipeline configured, pre-commit hooks, build scripts, `sloppy-joe` for dependency supply chain checks (typosquatting, hallucinated packages, canonical name enforcement)
 
 Do not silently assume guardrails exist. Check. If the project is brand new with no tooling, say so — "This project has zero guardrails. I recommend adding [X, Y, Z] as Phase 0."
 
@@ -198,6 +200,30 @@ For each phase, define:
 1. **What changes** — specific files and what happens to them
 2. **Automated verification** — exact commands to run (e.g., `make test`, `npm run typecheck`, specific test files)
 3. **Manual verification** — what a human checks before the next phase begins
+
+#### Human-writes mode (`/plan --human`)
+
+If the user runs `/plan --human`, or if the spec contains `[human-writes]` markers, identify which phases should be implemented by the human rather than the AI.
+
+**Suggest human-writes for phases that contain:**
+- Concurrency logic (locks, channels, atomics, transaction isolation)
+- Security-critical code (auth, authorization, input validation, crypto)
+- Core business logic (the mechanism from the spec — the thing that makes the feature work)
+- Invariant enforcement (the code that guarantees the rules from ARCHITECTURE.md)
+
+Present your suggestions: "I recommend these phases as human-writes: Phase 3 (queue concurrency) and Phase 5 (auth middleware). These are where understanding the code is more valuable than generating it. The rest can be AI-implemented. Agree?"
+
+The user confirms which phases are human-writes. Mark them in the plan file:
+
+```markdown
+### Phase 3: Queue concurrency handler [human-writes]
+**Files:** internal/queue/queue.go
+**Changes:** Implement concurrent append with O_APPEND, flush with rename-and-swap
+**Mode:** Human implements, AI writes tests and reviews
+...
+```
+
+`/build` reads these markers and switches to human-writes mode for flagged phases.
 
 ### 6. Present for review
 
