@@ -23,7 +23,7 @@ Read the entire spec file. Understand:
 - The constraint surface (scope boundaries, acceptance criteria)
 - The blind spots flagged
 
-Also read `specs/CONSTITUTION.md` if it exists. Constitutional principles are hard constraints — every proposed phase must comply. If a phase would require violating a constitutional principle, flag it before proposing the plan.
+Also read `specs/ARCHITECTURE.md` if it exists — its invariants section contains hard constraints that every proposed phase must comply with. If a phase would require violating an architectural invariant, flag it before proposing the plan.
 
 ### 2. Research the codebase
 
@@ -126,29 +126,7 @@ Wait for confirmation before proceeding.
 
 Architecture is project knowledge, not per-feature knowledge. After all three levels are confirmed, write or update `specs/ARCHITECTURE.md`:
 
-```markdown
-# Architecture
-
-> Last reviewed: [date] during `/plan` for [feature-name]
-
-## System Context
-[major components, communication protocols, system-level invariants, deployment boundaries]
-
-## Subsystem Map
-[modules and boundaries, data models and relationships, subsystem invariants, interface quality]
-
-## Design Patterns and Connections
-[conventions to follow, connection points with concrete interfaces, edge behaviors, error propagation]
-
-## Concurrency Model
-[shared mutable state, synchronization mechanisms, ordering guarantees — or "N/A: no shared mutable state"]
-
-## Test Strategy
-[unit/integration/e2e split, existing test patterns, mock vs real dependencies]
-
-## Risk Areas
-[weakest integration points, fragile existing code, inconsistent patterns, where AI will get it wrong]
-```
+Use the same structure as `/explore` produces (see `specs/ARCHITECTURE.md` template in explore.md): Codebase Overview, Internal Architecture (with Module Map, Data Models, Communication Patterns, Invariants, Error Handling subsections), External Connections, Ecosystem Context, Operational Context, Known Debt and Pain Points, Risk Areas. Update the "Last reviewed" date.
 
 **If `specs/ARCHITECTURE.md` already exists:** Read it first. Review it against the current codebase — does it still match reality? Update anything that has drifted. Add new subsystems or patterns this feature revealed. Update the "Last reviewed" date. Present changes to the user for confirmation.
 
@@ -182,7 +160,7 @@ Let the user decide. If they choose option 1, add a Phase 0 to the plan that ins
 - Go: `go vet`, `staticcheck` or `golangci-lint`, `go test` passing, `gofmt`/`goimports`
 - TypeScript: `tsc --strict`, ESLint with import rules, `npm test` passing, Prettier
 - Python: `mypy` or `pyright`, `ruff` or `flake8`, `pytest` passing, `black` or `ruff format`
-- Any language: CI pipeline configured, pre-commit hooks, build scripts, `sloppy-joe` for dependency supply chain checks (typosquatting, hallucinated packages, canonical name enforcement)
+- Any language: CI pipeline configured, pre-commit hooks, build scripts, [`sloppy-joe`](https://github.com/brennhill/sloppy-joe) for dependency supply chain checks (typosquatting, hallucinated packages, canonical name enforcement)
 
 Do not silently assume guardrails exist. Check. If the project is brand new with no tooling, say so — "This project has zero guardrails. I recommend adding [X, Y, Z] as Phase 0."
 
