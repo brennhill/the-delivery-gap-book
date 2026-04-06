@@ -61,14 +61,14 @@ Agents have shell access. If credentials are on disk, the agent can read them. O
 | Portkey | AI gateway with guardrails, rate limiting, cost tracking, fallbacks | No | https://portkey.ai |
 | Helicone | LLM observability and cost tracking proxy | Yes (Apache 2.0) | https://helicone.ai |
 | LiteLLM | Unified proxy for 100+ LLM providers. Cost tracking, rate limiting, fallbacks, load balancing. | Yes (MIT) | https://github.com/BerriAI/litellm |
-| Galileo | LLM monitoring with hallucination detection | No | https://www.rungalileo.io |
+| Galileo | LLM monitoring with hallucination detection | No | https://www.galileo.ai/ |
 
 ## Red-Teaming & Adversarial Testing (OWASP #4 Prompt Injection, #1 Excessive Agency)
 
 | Tool | What it does | OSS | URL |
 |------|-------------|-----|-----|
 | promptfoo | LLM eval and red-teaming framework. Generates adversarial attacks tailored to your app: prompt injections, jailbreaks, data leaks, PII exposure, business rule violations. 50+ vulnerability types. YAML-configured test suites that run in CI. Also tests RAG pipelines, agents, and guardrails. | Yes (MIT) | https://promptfoo.dev |
-| Garak | LLM vulnerability scanner. Probes for prompt injection, data extraction, and hallucination. | Yes (Apache 2.0) | https://github.com/leondz/garak |
+| Garak | LLM vulnerability scanner. Probes for prompt injection, data extraction, and hallucination. | Yes (Apache 2.0) | https://github.com/NVIDIA/garak |
 
 Red-teaming is a behavioral gate (Tier 4) that tests what the model *does*, not what the code *looks like*. Run adversarial tests against your LLM-powered features the same way you run unit tests against your code. If you're building anything that takes user input and passes it to a model, these tools catch the attacks your unit tests can't.
 
@@ -97,7 +97,7 @@ Red-teaming is a behavioral gate (Tier 4) that tests what the model *does*, not 
 | Tool | What it does | OSS | URL |
 |------|-------------|-----|-----|
 | LangGraph | Multi-agent orchestration with state machines | Yes (MIT) | https://github.com/langchain-ai/langgraph |
-| Google ADK | Agent Development Kit with routing and orchestration | Yes (Apache 2.0) | https://google.github.io/adk-docs/ |
+| Google ADK | Agent Development Kit with routing and orchestration | Yes (Apache 2.0) | https://adk.dev/ |
 | CrewAI | Multi-agent framework with role-based coordination | Yes (MIT) | https://www.crewai.com |
 | Temporal | Durable execution for agent workflows | Yes (MIT) | https://temporal.io |
 | AutoGen | Multi-agent conversation framework (Microsoft) | Yes (MIT) | https://github.com/microsoft/autogen |
@@ -131,10 +131,10 @@ For full implementation details, see [../agent-monitoring/README.md](../agent-mo
 | Tool | What it does | OSS | URL |
 |------|-------------|-----|-----|
 | SPIFFE / SPIRE | Cryptographic identity for agents | Yes (Apache 2.0) | https://spiffe.io |
-| Google A2A Protocol | Agent-to-agent communication standard | Emerging | https://google.github.io/A2A/ |
+| Google A2A Protocol | Agent-to-agent communication standard | Emerging | https://a2a-protocol.org |
 
 ## Official Provider Guides
 
 - [OpenAI: A practical guide to building agents](https://openai.com/business/guides-and-resources/a-practical-guide-to-building-ai-agents/) — Guardrails, input filtering, tool use safety, human-in-the-loop.
 - [Anthropic: Building Effective AI Agents](https://resources.anthropic.com/building-effective-ai-agents) — End-to-end agent patterns with security and eval guidance.
-- [Google ADK: Safety and Security for AI Agents](https://google.github.io/adk-docs/safety/) — Identity, permissions, sandboxing, I/O controls for agents.
+- [Google ADK: Safety and Security for AI Agents](https://adk.dev/safety/) — Identity, permissions, sandboxing, I/O controls for agents.

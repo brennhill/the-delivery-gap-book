@@ -297,6 +297,6 @@ These are the canonical references from the companies building the models. Read 
 
 - [OpenAI: How we monitor internal coding agents for misalignment](https://openai.com/index/how-we-monitor-internal-coding-agents-misalignment/) — The most detailed public guide on agent behavioral monitoring. Tens of millions of interactions, severity tiers, what they found.
 - [OpenAI: A practical guide to building agents](https://openai.com/business/guides-and-resources/a-practical-guide-to-building-ai-agents/) — Input filtering, tool use guardrails, human-in-the-loop patterns.
-- [Anthropic: Claude Code best practices for agentic coding](https://www.anthropic.com/engineering/claude-code-best-practices) — Practical agentic coding patterns with safety considerations.
-- [Anthropic: Building agents with the Claude Agent SDK](https://www.anthropic.com/engineering/building-agents-with-the-claude-agent-sdk) — Agent SDK patterns with built-in guardrails.
-- [Google ADK: Safety and Security for AI Agents](https://google.github.io/adk-docs/safety/) — Identity, permissions, sandboxing, I/O controls.
+- [Anthropic: Claude Code best practices for agentic coding](https://code.claude.com/docs) — Practical agentic coding patterns with safety considerations.
+- [Anthropic: Building agents with the Claude Agent SDK](https://claude.com/blog/building-agents-with-the-claude-agent-sdk) — Agent SDK patterns with built-in guardrails.
+- [Google ADK: Safety and Security for AI Agents](https://adk.dev/safety/) — Identity, permissions, sandboxing, I/O controls.

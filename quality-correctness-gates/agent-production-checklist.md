@@ -335,6 +335,9 @@ All agent-generated output must be reviewed by a human before it has any effect 
 - [ ] Reviewer can see what the agent actually did (full diff, not just summary)
 - [ ] Reviewer can access the audit trail for the session
 - [ ] No bypass mechanism exists (no `--force`, no admin override that skips review)
+- [ ] LLM-as-judge configured: a separate model evaluates the agent's diff against the original task intent before human review (catches scope creep, gold-plating, unrelated changes)
+- [ ] Visual regression gate runs on PRs that touch frontend code (Playwright screenshot assertions, Chromatic, or Percy — catches layout/styling regressions invisible to unit tests)
+- [ ] CI retry cap enforced: agent may attempt to fix CI failures, but is limited to 2 rounds — if the second run fails, the task is returned to a human (prevents infinite retry loops that burn tokens and degrade code)
 
 ### Tests to run
 
@@ -798,9 +801,9 @@ This checklist synthesizes production practices from:
 - [OpenAI: How we monitor internal coding agents for misalignment](https://openai.com/index/how-we-monitor-internal-coding-agents-misalignment/)
 - [OpenAI: A practical guide to building agents](https://openai.com/business/guides-and-resources/a-practical-guide-to-building-ai-agents/)
 - [Anthropic: Building Effective AI Agents](https://resources.anthropic.com/building-effective-ai-agents)
-- [Anthropic: Claude Code best practices](https://www.anthropic.com/engineering/claude-code-best-practices)
-- [Anthropic: Building agents with the Claude Agent SDK](https://www.anthropic.com/engineering/building-agents-with-the-claude-agent-sdk)
-- [Google ADK: Safety and Security for AI Agents](https://google.github.io/adk-docs/safety/)
+- [Anthropic: Claude Code best practices](https://code.claude.com/docs)
+- [Anthropic: Building agents with the Claude Agent SDK](https://claude.com/blog/building-agents-with-the-claude-agent-sdk)
+- [Google ADK: Safety and Security for AI Agents](https://adk.dev/safety/)
 - [OWASP Top 10 for Agentic Applications](https://genai.owasp.org/resource/owasp-top-10-for-agentic-applications-for-2026/)
 - Stripe Minions architecture (Stripe Dev Blog, 2026)
 - Spotify Honk system (Spotify Engineering Blog, 2025)

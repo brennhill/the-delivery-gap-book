@@ -103,5 +103,5 @@ report = format_markdown(results, model="claude-sonnet-4-5-20250514", diff_len=l
 
 ## Further Reading
 
-- [Anthropic: Claude Code best practices for agentic coding](https://www.anthropic.com/engineering/claude-code-best-practices)
+- [Anthropic: Claude Code best practices for agentic coding](https://code.claude.com/docs)
 - [Anthropic: Demystifying evals for AI agents](https://www.anthropic.com/engineering/demystifying-evals-for-ai-agents)
