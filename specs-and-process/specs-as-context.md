@@ -115,6 +115,8 @@ Each layer answers questions the others cannot. Code without specs produces agen
 
 **Specs make LLM-as-judge effective.** The judge evaluates whether the agent's output matches the original intent. Without a spec, the judge is comparing the diff against a vague prompt. With a spec, the judge has explicit success criteria, invariants, and out-of-scope boundaries to check against. The spec is what makes intent alignment verifiable.
 
+**Specs as a living knowledge base.** Andrej Karpathy describes a pattern where LLMs incrementally compile and maintain structured markdown wikis — ingesting raw sources, cross-referencing across pages, and periodically auditing for contradictions and stale claims ([gist](https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f)). Specs can work the same way. Instead of a static document written once and abandoned, a spec is a living wiki page that the agent updates as decisions are made, constraints are discovered, and the codebase evolves. The maintenance burden that causes humans to abandon documentation — updating cross-references, catching contradictions, keeping entries current — is exactly what LLMs do well. Humans curate the sources and make the decisions. The agent handles the bookkeeping that makes the spec actually compound over time rather than rot.
+
 ---
 
 ## The Spec Lifecycle
