@@ -134,6 +134,12 @@ For full implementation details, see [../agent-monitoring/README.md](../agent-mo
 | SPIFFE / SPIRE | Cryptographic identity for agents | Yes (Apache 2.0) | https://spiffe.io |
 | Google A2A Protocol | Agent-to-agent communication standard | Emerging | https://a2a-protocol.org |
 
+## MCP Security
+
+Agents that use MCP servers inherit the security posture of every server they connect to. A compromised or misconfigured MCP server is a privilege escalation path — the agent trusts the tools the server exposes, and the server may have access the agent should not.
+
+- [Awesome MCP Security](https://github.com/Puliczek/awesome-mcp-security) — Curated collection of MCP security research, papers, tools, and best practices. Covers input validation, access controls, rate limiting, and human oversight for agentic MCP workflows.
+
 ## Official Provider Guides
 
 - [OpenAI: A practical guide to building agents](https://openai.com/business/guides-and-resources/a-practical-guide-to-building-ai-agents/) — Guardrails, input filtering, tool use safety, human-in-the-loop.
