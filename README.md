@@ -41,6 +41,9 @@ CLAUDE.md template, adoption playbook (Webflow/Dropbox/Spotify patterns), and fi
 ### [Worked Examples](tools/)
 Invariant, contract, and eval test examples you can adapt for your domain.
 
+### [Cost Efficiency](tools/cost-efficiency/)
+Token compression (RTK), documentation context (Context7), and semantic code navigation (Serena) — tools that reduce the cost of the verification loop without replacing it.
+
 ---
 
 ## The Spec Template
