@@ -141,3 +141,11 @@ The `/feature` command in this toolkit walks through intent, behavioral spec, de
 That output IS the spec. You did not write a spec and then build. You thought through the problem, captured the thinking, and now have a document that serves alignment, auditing, and handover. The spec was a byproduct of good process, not a prerequisite for permission to start.
 
 If you skip `/feature` and go straight to code, you can still spec as you go — just capture the decisions as you make them. The format matters less than the discipline: every time you make a decision that would be invisible in the code, write it down.
+
+## Using Specs to Build
+
+You already have the spec. There is nothing wrong with handing it to an agent and saying "build this." The spec gives the agent constraints, invariants, and context it would not otherwise have. Use it.
+
+But do not assume the spec will make the output less buggy, or that a spec-driven build is higher quality than a well-prompted interactive session. Research does not support that claim. The agent will still hallucinate, still miss edge cases, still produce tests that assert nothing. The verification gates catch those problems, not the spec.
+
+Where specs genuinely help with building is **time-shifting.** Hand the spec to an agent and let it work while you are in meetings, at lunch, or asleep. The overnight agent pattern from the book depends on this: a spec with clear constraints and success criteria lets an agent produce a reviewable PR without the human sitting in the loop. You review it fresh in the morning. The spec did not make the code better — it made the agent's unsupervised work scoped enough to be reviewable. That buys you hours back in your day, which is a real efficiency gain. Just do not confuse it with a quality gain.
