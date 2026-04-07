@@ -36,7 +36,7 @@ What to measure, how to run a 15-minute weekly review, and a five-metric diagnos
 Iterate first, specify second. Task structuring for agents, version-controlled prompts, and the four-phase feature definition process (Intent, Behavioral Spec, Design, Implementation) that treats specs as the receipt of what you learned through building.
 
 ### [Templates](templates/)
-CLAUDE.md template, adoption playbook (Webflow/Dropbox/Spotify patterns), and first-week AI onboarding guide.
+CLAUDE.md template, adoption playbook (Webflow/Dropbox/Spotify patterns), [multi-team rollout guide](templates/rollout/multi-team-rollout.md) (blast-radius-first wave sequencing for 5-50 teams), and first-week AI onboarding guide.
 
 ### [Worked Examples](tools/)
 Invariant, contract, and eval test examples you can adapt for your domain.
