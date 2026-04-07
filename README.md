@@ -33,7 +33,7 @@ Six-tier verification architecture with production examples from Stripe, Spotify
 What to measure, how to run a 15-minute weekly review, and a five-metric diagnostic for code and agent workflows.
 
 ### [Specs & Process](specs-and-process/)
-Iterate first, specify second. Task structuring for agents, version-controlled prompts, and the four-phase feature definition process (Intent, Behavioral Spec, Design, Implementation) that treats specs as the receipt of what you learned through building.
+Iterate first, specify second. [Specs as context](specs-and-process/specs-as-context.md) — what specs are actually for (alignment, auditing, handover), what to document (everything the code cannot tell you), and how to spec as you go. Plus task structuring for agents, version-controlled prompts, and the four-phase feature definition process.
 
 ### [Templates](templates/)
 CLAUDE.md template, adoption playbook (Webflow/Dropbox/Spotify patterns), [multi-team rollout guide](templates/rollout/multi-team-rollout.md) (blast-radius-first wave sequencing for 5-50 teams), and first-week AI onboarding guide.
