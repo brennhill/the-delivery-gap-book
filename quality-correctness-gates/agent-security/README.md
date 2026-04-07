@@ -41,6 +41,10 @@ Agents have shell access. If credentials are on disk, the agent can read them. O
 | Docker (rootless) | Container isolation. Minimum viable sandbox. | Yes | https://docs.docker.com/engine/security/rootless/ |
 | E2B | Cloud sandboxes for AI agents. Isolated environments with API access. | Partial | https://e2b.dev |
 | Daytona | Standardized dev environments for agents. | Yes (Apache 2.0) | https://www.daytona.io |
+| NeMo Guardrails | Programmable guardrails for LLM-based systems. Define conversation flows, topic boundaries, and safety rules in Colang. | Yes (Apache 2.0) | https://github.com/NVIDIA-NeMo/Guardrails |
+| LlamaFirewall | Multi-layer AI security risk detection. Supports LLM chat and multi-step agentic operations. | Yes (MIT) | https://github.com/meta-llama/llama-firewall |
+| OpenGuardrails | Action-level protection for agents. Intercepts and validates every action before execution. | Yes | https://github.com/openguardrails/openguardrails |
+| OpenAgentsControl | Plan-first agent framework with approval-based execution. Automatic testing, code review, and validation gates. | Yes (MIT) | https://github.com/darrenhinde/OpenAgentsControl |
 
 ## Scope Monitoring & Permission Control (OWASP #1, #5 Trust Boundaries, #6 Memory)
 
@@ -134,11 +138,18 @@ For full implementation details, see [../agent-monitoring/README.md](../agent-mo
 | SPIFFE / SPIRE | Cryptographic identity for agents | Yes (Apache 2.0) | https://spiffe.io |
 | Google A2A Protocol | Agent-to-agent communication standard | Emerging | https://a2a-protocol.org |
 
-## MCP Security
+## Curated Collections & Research
 
-Agents that use MCP servers inherit the security posture of every server they connect to. A compromised or misconfigured MCP server is a privilege escalation path — the agent trusts the tools the server exposes, and the server may have access the agent should not.
+Maintained awesome lists and guides covering the broader AI security and agent safety landscape.
 
-- [Awesome MCP Security](https://github.com/Puliczek/awesome-mcp-security) — Curated collection of MCP security research, papers, tools, and best practices. Covers input validation, access controls, rate limiting, and human oversight for agentic MCP workflows.
+| Resource | What it covers | URL |
+|----------|---------------|-----|
+| Awesome AI Security (ottosulin) | Broad AI security resources — attacks, defenses, tools, research | https://github.com/ottosulin/awesome-ai-security |
+| Awesome LLM Red-Teaming | Red-teaming tools, techniques, vulnerability research for LLMs | https://github.com/user1342/Awesome-LLM-Red-Teaming |
+| LLM Security Guide | OWASP GenAI Top-10, prompt injection defenses, guardrail catalog | https://github.com/requie/LLMSecurityGuide |
+| AI Red-Teaming Guide | Structured adversarial testing methodology for AI systems | https://github.com/requie/AI-Red-Teaming-Guide |
+| Awesome AI Agent Papers 2026 | Current research on agents — engineering, memory, eval, security | https://github.com/VoltAgent/awesome-ai-agent-papers |
+| Awesome MCP Security | MCP-specific security research, tools, and best practices | https://github.com/Puliczek/awesome-mcp-security |
 
 ## Official Provider Guides
 
