@@ -126,6 +126,10 @@ AI generates UI code confidently but cannot see what it renders. Unit tests veri
 
 ---
 
+## Where the Gaps Are
+
+See **[gap-analysis.md](gap-analysis.md)** for a tier-by-tier assessment of what open tooling covers and what it doesn't — informed by what Stripe, Spotify, and Webflow actually built. Short version: Tier 0 is solved, Tier 4 (behavioral baselining + LLM-as-judge) is the biggest gap.
+
 ## Contents
 
 | Directory | What it is |
